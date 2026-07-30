@@ -665,3 +665,40 @@ async function descargarVideo(filename){
     window.location.href = data.url;
 
 }
+
+/*
+const menuToggle = document.getElementById("menu-toggle");
+
+const sidebar = document.querySelector(".sidebar");
+
+if(menuToggle && sidebar){
+
+    menuToggle.addEventListener("click", ()=>{
+
+        sidebar.classList.toggle("open");
+
+    });
+
+}*/
+const menuButton = document.getElementById("menu-toggle");
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.getElementById("menu-overlay");
+
+if(menuButton && sidebar){
+
+    menuButton.addEventListener("click", ()=>{
+
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("show");
+
+    });
+
+    overlay.addEventListener("click", ()=>{
+
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+
+    });
+
+}
+

@@ -163,7 +163,7 @@ async def subir(request: Request):
     )
 @app.get("/download/{filename:path}")
 async def download(filename: str):
-    print("descargando key: ",repr(filename))
+    #print("descargando key: ",repr(filename))
     url = r2.generate_download_url(
         filename
     )
@@ -332,7 +332,7 @@ async def upload(
     # ===============================
 
     filename = f"{title}.mp4"
-    print("GUARDANDO EN R2:", repr(filename))
+    #print("GUARDANDO EN R2:", repr(filename))
 
 
     upload_id = r2.initiate_upload(
