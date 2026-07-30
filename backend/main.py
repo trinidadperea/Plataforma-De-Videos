@@ -163,7 +163,7 @@ async def subir(request: Request):
     )
 @app.get("/download/{filename:path}")
 async def download(filename: str):
-
+    print("descargando key: ",repr(filename))
     url = r2.generate_download_url(
         filename
     )

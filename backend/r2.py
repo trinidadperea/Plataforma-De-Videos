@@ -64,6 +64,7 @@ def complete_upload(
 # link de descarga que dura 1 hora
 def generate_download_url(filename: str):
 
+    print("KEY RECIBIDA:", repr(filename))
     url = client.generate_presigned_url(
         "get_object",
         Params={
