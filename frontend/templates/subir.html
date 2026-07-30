@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Subir video
+{% endblock %}
+
+{% block content %}
+
+<section class="card">
+
+    <h3>Elegir fecha</h3>
+
+    <select id="playlist-select">
+
+        <option>Cargando playlists...</option>
+
+    </select>
+
+</section>
+
+
+<section class="card">
+
+    <h3>Partido</h3>
+
+    <label>Club local</label>
+
+    <select id="club-local"></select>
+
+
+    <label>Club visitante</label>
+
+    <select id="club-visitante"></select>
+
+</section>
+
+
+<section class="card">
+
+    <h3>Resultado</h3>
+
+    <div class="resultado">
+
+        <label id="nombre-local">
+            Local
+        </label>
+
+        <input
+            type="number"
+            id="goles-local"
+            min="0"
+            placeholder="0"
+        >
+
+        <span>-</span>
+
+        <label id="nombre-visitante">
+            Visitante
+        </label>
+
+        <input
+            type="number"
+            id="goles-visitante"
+            min="0"
+            placeholder="0"
+        >
+
+    </div>
+
+    <div id="bonus-section" class="hidden">
+
+        <label>Bonus</label>
+
+        <select id="bonus-club">
+
+            <option value="">Seleccionar club</option>
+
+        </select>
+
+    </div>
+
+</section>
+
+
+<section class="card">
+
+    <h3>Video del partido</h3>
+
+    <div class="upload-box">
+
+        <div class="upload-icon">
+
+            
+
+        </div>
+
+        <p>Seleccioná el video del partido</p>
+        <p>Archivos permitidos (.mp4) </p>
+
+        <input
+            type="file"
+            id="video-file"
+            accept="video/*"
+        >
+
+    </div>
+
+    <button id="upload-button">
+
+        Subir video
+
+    </button>
+
+    <div id="progress-container" class="hidden">
+
+        <div id="progress-bar"></div>
+
+    </div>
+
+
+    <p id="upload-status"></p>
+    <p id="upload-warning" class="hidden">
+    No cierres esta página hasta que termine de subirse el video
+</p>
+
+</section>
+
+{% endblock %}

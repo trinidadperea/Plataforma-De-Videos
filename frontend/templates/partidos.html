@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Partidos
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="card">
+
+    <h3>Fechas del torneo</h3>
+
+    <div id="fechas-container">
+
+        {% for playlist in playlists %}
+
+        <a 
+            href="/partidos/{{ playlist.id }}"
+            class="fecha-button"
+        >
+            {{ playlist.nombre }}
+        </a>
+
+        {% endfor %}
+    
+    </div>
+
+
+
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+
+{% block content %}
+
+<section class="card login-card">
+
+    <h3>Ingresar</h3>
+
+
+    <label>
+        Usuario
+    </label>
+
+    <input 
+        type="text"
+        id="username"
+        placeholder="Usuario"
+    >
+
+
+    <label>
+        Contraseña
+    </label>
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Contraseña"
+    >
+
+
+    <button id="login-button">
+        Ingresar
+    </button>
+
+
+    <p id="login-error"></p>
+
+
+</section>
+
+
+<script src="/static/js/login.js"></script>
+
+{% endblock %}

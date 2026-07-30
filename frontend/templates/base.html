@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        {% block title %}
+        Torneo Clausura 2026
+        {% endblock %}
+
+    </title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="topbar-user">
+
+        {% if usuario %}
+
+            <a href="/logout">
+                Cerrar sesión
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Iniciar sesión
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h1> Torneo</h1>
+            <p>Clausura 2026</p>
+
+        </div>
+
+        <nav>
+
+            <a href="{% if usuario %}/subir{% else %}/login{% endif %}" class="menu-item {% if active_page == 'subir' %}active{% endif %}">
+                <span>Subir video</span>
+            </a>
+
+            <a href="/partidos" class="menu-item">
+                <span>Partidos</span>
+            </a>
+
+            <a href="/fixture" class="menu-item">
+                <span>Fixture</span>
+            </a>
+        </nav>
+
+    </aside>
+
+
+    <main class="content">
+
+        <div class="page-title">
+
+        </div>
+
+        {% block content %}
+        {% endblock %}
+        
+
+    </main>
+
+</div>
+
+<script src="/static/js/app.js"></script>
+
+</body>
+
+
+</html>

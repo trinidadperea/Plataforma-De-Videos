@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Partidos
+{% endblock %}
+
+
+{% block content %}
+
+<div class="top-actions">
+
+    <a href="/partidos" class="back-button">
+        Volver
+    </a>
+
+</div>
+
+
+<section class="card">
+
+
+    <h3>Partidos de la fecha</h3>
+
+
+    {% for video in videos %}
+
+    <div class="partido-item">
+
+        <div>
+
+            <strong>
+                {{ video.resultado }}
+            </strong>
+
+        </div>
+
+        <div class="acciones-partido">
+            
+            <button 
+            class="watch-button download-button"
+            onclick="descargarVideo('{{ video.archivo }}')">
+
+                <i class="fa-solid fa-download"></i>
+
+            </button>
+            <a 
+            href="{{ video.url }}"
+            target="_blank"
+            class="watch-button">
+            Ver partido
+        </a>
+        
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+</section>
+
+{% endblock %}
