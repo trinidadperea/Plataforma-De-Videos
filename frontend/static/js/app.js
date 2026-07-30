@@ -455,7 +455,32 @@ if (uploadButton) {
 
             try {
 
-                const response = await subirVideoProgreso(file, headers);
+                const filename = `${title.trim()}.mp4`;
+                // 1) Pedir URL a Render
+                const infoUpload = await fetch("/crear-upload", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        filename: filename
+                    })
+                    
+
+                });
+
+                const datos = await infoUpload.json();
+
+                // 2) Subir directo a R2
+                const response = await subirVideoProgreso(
+                    file,
+                    datos.upload_url
+                );
+
+                //const response = await subirVideoProgreso(file, headers);
 
 /*
                 const response = await fetch(
@@ -514,18 +539,29 @@ if (uploadButton) {
 
 }
     
-async function subirVideoProgreso(file, headers) {
+async function subirVideoProgreso(file, uploadUrl){ //,headers) {
     return new Promise((resolve, reject) => {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open(
+      /*  xhr.open(
             "POST",
             "/upload"
+        ); */
+
+        xhr.open(
+            "PUT",
+            uploadUrl
+        );
+
+        xhr.setRequestHeader(
+            "Content-Type",
+            file.type
         );
 
 
         // Agregar headers personalizados
+        /*
         Object.entries(headers).forEach(([key, value]) => {
 
             xhr.setRequestHeader(
@@ -533,7 +569,7 @@ async function subirVideoProgreso(file, headers) {
                 value
             );
 
-        });
+        });*/
 
 
         const progressContainer =
@@ -581,8 +617,16 @@ async function subirVideoProgreso(file, headers) {
                     xhr.status >= 200 &&
                     xhr.status < 300,
 
-                json: async () =>
-                    JSON.parse(xhr.responseText)
+                json: async () => {
+
+                    if (!xhr.responseText) {
+                        return {};
+                    }
+                    return JSON.parse(xhr.responseText);
+                }
+                    
+
+                    //JSON.parse(xhr.responseText)
 
             });
 

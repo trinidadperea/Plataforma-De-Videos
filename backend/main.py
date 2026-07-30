@@ -262,7 +262,20 @@ async def logout():
         key=COOKIE_NAME
     )
     return response
-    
+
+@app.post("/crear-upload")
+async def crear_upload(request: Request):
+
+    data = await request.json()
+
+    filename = data["filename"]
+
+    url = r2.create_upload_url(filename)
+
+    return {
+        "upload_url": url,
+        "filename": filename
+    }  
 
 # funcion upload que funciona para r2 y para youtube
 @app.post("/upload")

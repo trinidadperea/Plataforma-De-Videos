@@ -76,6 +76,20 @@ def generate_download_url(filename: str):
 
     return url
 
+def create_upload_url(filename: str):
+
+    url = client.generate_presigned_url(
+        "put_object",
+        Params={
+            "Bucket": BUCKET,
+            "Key": filename,
+            "ContentType": "video/mp4"
+        },
+        ExpiresIn=3600
+    )
+
+    return url
+
 def abort_upload(filename, upload_id):
 
     client.abort_multipart_upload(
