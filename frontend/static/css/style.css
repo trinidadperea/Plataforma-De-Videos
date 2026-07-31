@@ -913,6 +913,13 @@ input[type="file"]{
 
 @media (max-width:768px){
 
+    .fixture-card{
+        padding:0;
+        background:none;
+        box-shadow:none;
+        border:none;
+    }
+
     .content{
 
         margin-left:0;
