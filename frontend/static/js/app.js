@@ -702,3 +702,20 @@ if(menuButton && sidebar){
 
 }
 
+
+const videoFile = document.getElementById("video-file");
+const fileName = document.getElementById("file-name");
+
+videoFile.addEventListener("change", () => {
+
+    if (videoFile.files.length > 0) {
+
+        fileName.textContent = videoFile.files[0].name;
+
+    } else {
+
+        fileName.textContent = "Ningún archivo seleccionado";
+
+    }
+
+});

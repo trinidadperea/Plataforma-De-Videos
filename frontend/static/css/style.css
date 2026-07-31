@@ -848,6 +848,50 @@ input[type="file"]{
     font-size: 15px;
     box-sizing: border-box;
 }
+/* ===========================
+  Boton examinar
+=========================== */
+
+.file-upload{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+.file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 140px;
+    height: 45px;
+
+    border: 2px dashed #999;
+    border-radius: 8px;
+
+    background: #fafafa;
+    color: #333;
+
+    cursor: pointer;
+    font-size: 15px;
+    font-family: inherit;
+
+    transition: all 0.2s ease;
+}
+
+.file-button:hover {
+    border-color: #1d4ed8;
+    background: #eef4ff;
+    color: #1d4ed8;
+}
+
+#file-name{
+    font-size:14px;
+    color:#555;
+    word-break:break-word;
+}
 
 @media (max-width:768px){
 

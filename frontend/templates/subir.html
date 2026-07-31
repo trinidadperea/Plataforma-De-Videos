@@ -97,13 +97,20 @@ Subir video
         <p>Seleccioná el video del partido</p>
         <p>Archivos permitidos (.mp4) </p>
 
-        <input
-            type="file"
-            id="video-file"
-            accept="video/*"
-        >
+         <label for="video-file" class="file-button">
+                Examinar
+            </label>
 
+            <span id="file-name">
+                Ningún archivo seleccionado
+            </span>
 
+            <input
+                type="file"
+                id="video-file"
+                accept="video/*"
+                hidden
+            >
 
     </div>
 
