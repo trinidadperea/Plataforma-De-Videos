@@ -33,7 +33,7 @@ loginButton.addEventListener(
             await response.json();
 
         if(response.ok){
-            window.location.href="/";
+            window.location.href="/subir";
         }
         else{
 
