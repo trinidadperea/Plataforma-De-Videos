@@ -22,6 +22,57 @@ const clubes = [
     "Marista de San Rafael"
 ];
 
+const fechas = [ 
+    "Seleccione una fecha",
+    "Fecha 1",
+    "Fecha 2",
+    "Fecha 3",
+    "Fecha 4",
+    "Fecha 5",
+    "Fecha 6",
+    "Fecha 7",
+    "Fecha 8",
+    "Fecha 9",
+    "Fecha 10",
+    "Fecha 11",
+    "Fecha 12",
+    "Fecha 13",
+    "Fecha 14",
+    "Fecha 15"
+];
+
+function cargarFechas(){
+
+    const select = document.getElementById("fecha-select");
+
+    // Si no estamos en subir.html, salimos
+    if (!select) {
+        return;
+    }
+
+    select.innerHTML = "";
+
+    fechas.forEach((fecha, index) => {
+
+        const option = document.createElement("option");
+
+        option.value = index === 0 ? "" : fecha;
+        option.textContent = fecha;
+
+        if (index === 0) {
+            option.disabled = true;
+            option.selected = true;
+        }
+
+        select.appendChild(option);
+
+    });
+
+}
+
+cargarFechas();
+
+
 function cargarClubes(){
 
     const local = document.getElementById("club-local");
@@ -94,7 +145,7 @@ async function cargarPlaylists(){
         const opcionInicial = document.createElement("option");
 
         opcionInicial.value = "";
-        opcionInicial.textContent = "Seleccionar fecha";
+        opcionInicial.textContent = "Seleccionar";
         opcionInicial.disabled = true;
         opcionInicial.selected = true;
 
@@ -339,6 +390,13 @@ if (uploadButton) {
             const file =
                 document.getElementById("video-file").files[0];
 
+            if (!file) {
+                alert(
+                    "Elegí un video"
+                );
+                return;
+            }
+
             // Tamaño máximo: 3 GB
             const MAX_SIZE = 3 * 1024 * 1024 * 1024;
 
@@ -359,6 +417,13 @@ if (uploadButton) {
 
             // se debe seleciconar una playlist
             if (!playlistSeleccionada) {
+                alert("Seleccioná una fecha.");
+                return;
+            }
+
+            const fecha = document.getElementById("fecha-select").value;
+
+            if (!fecha) {
                 alert("Seleccioná una fecha.");
                 return;
             }
@@ -400,14 +465,10 @@ if (uploadButton) {
                 alert("Seleccioná el equipo que obtuvo el bonus.");
                 return;
             }
-            if (!file) {
-                alert(
-                    "Elegí un video"
-                );
-                return;
-            }
+            
 
             const title =`${clubLocal} vs ${clubVisitante}`;
+            //const fecha = document.getElementById("fecha-select").value;
             const bonus = document.getElementById("bonus-club").value;
             let description; 
 
@@ -426,6 +487,8 @@ if (uploadButton) {
             const headers = {
 
                 "X-Title": title,
+
+                "X-Fecha": fecha,
 
                 "X-Description": description,
 
@@ -455,6 +518,7 @@ if (uploadButton) {
 
             try {
 
+                /*
                 const filename = `${title.trim()}.mp4`;
                 // 1) Pedir URL a Render
                 const infoUpload = await fetch("/crear-upload", {
@@ -478,9 +542,9 @@ if (uploadButton) {
                 const response = await subirVideoProgreso(
                     file,
                     datos.upload_url
-                );
+                ); */
 
-                //const response = await subirVideoProgreso(file, headers);
+                const response = await subirVideoProgreso(file, headers);
 
 /*
                 const response = await fetch(
@@ -492,9 +556,11 @@ if (uploadButton) {
                     }
                 );
 */
-                const data =
-                    await response.json();
+                //const data =
+                  //  await response.json();
 
+                const data = response.data;
+                  
                 if (response.ok) {
 
                     status.textContent =
@@ -539,17 +605,81 @@ if (uploadButton) {
 
 }
     
-async function subirVideoProgreso(file, uploadUrl){ //,headers) {
+
+async function subirVideoProgreso(file, headers){ //,uploadUrl) {
     return new Promise((resolve, reject) => {
 
         const xhr = new XMLHttpRequest();
 
-      /*  xhr.open(
+        xhr.open(
             "POST",
             "/upload"
-        ); */
+        ); 
 
-        xhr.open(
+        // Mostrar progreso
+        xhr.upload.addEventListener("progress", (event) => {
+
+            if (event.lengthComputable) {
+
+                const porcentaje =
+                    Math.round(
+                        (event.loaded / event.total) * 100
+                    );
+
+                const progressBar =
+                    document.getElementById("progress-bar");
+
+                const status =
+                    document.getElementById("upload-status");
+
+                if (progressBar) {
+                    progressBar.style.width =
+                        `${porcentaje}%`;
+                }
+
+                if (status) {
+                    status.textContent =
+                        `Subiendo video... ${porcentaje}%`;
+                }
+
+            }
+
+        });
+
+        xhr.addEventListener("load", () => {
+
+            let data;
+
+            try {
+                data = JSON.parse(xhr.responseText);
+            } catch {
+                data = {};
+            }
+
+            resolve({
+                ok: xhr.status >= 200 && xhr.status < 300,
+                status: xhr.status,
+                data: data
+            });
+
+        });
+
+        xhr.addEventListener("error", () => {
+            reject(new Error("Error de conexión"));
+        });
+
+        // Agregar headers
+        Object.entries(headers).forEach(
+            ([nombre, valor]) => {
+                xhr.setRequestHeader(nombre, valor);
+            }
+        );
+
+        xhr.send(file);
+
+    });
+
+        /*xhr.open(
             "PUT",
             uploadUrl
         );
@@ -557,7 +687,7 @@ async function subirVideoProgreso(file, uploadUrl){ //,headers) {
         xhr.setRequestHeader(
             "Content-Type",
             file.type
-        );
+        );*/
 
 
         // Agregar headers personalizados
@@ -572,6 +702,7 @@ async function subirVideoProgreso(file, uploadUrl){ //,headers) {
         });*/
 
 
+        /*
         const progressContainer =
             document.getElementById("progress-container");
 
@@ -644,7 +775,7 @@ async function subirVideoProgreso(file, uploadUrl){ //,headers) {
 
         xhr.send(file);
 
-    });
+    }); */
 }
 
 async function descargarVideo(filename){
@@ -706,16 +837,19 @@ if(menuButton && sidebar){
 const videoFile = document.getElementById("video-file");
 const fileName = document.getElementById("file-name");
 
-videoFile.addEventListener("change", () => {
+if (videoFile && fileName) {
+    videoFile.addEventListener("change", () => {
 
-    if (videoFile.files.length > 0) {
+        if (videoFile.files.length > 0) {
 
-        fileName.textContent = videoFile.files[0].name;
+            fileName.textContent = videoFile.files[0].name;
 
-    } else {
+        } else {
 
-        fileName.textContent = "Ningún archivo seleccionado";
+            fileName.textContent = "Ningún archivo seleccionado";
 
-    }
+        }
 
-});
+    });
+}
+

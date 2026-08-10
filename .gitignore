@@ -16,3 +16,4 @@ client_secret.json
 token.json
 refresh_token.py
 
+.env

@@ -1,60 +1,71 @@
 """
 Lógica de comunicación con la API de YouTube.
-No guarda nada en disco: todo se hace en streaming.
+
+Responsabilidades:
+- Obtener y refrescar el access token.
+- Iniciar subidas resumables.
+- Subir bloques de un video.
+- Agregar videos a playlists.
+- Obtener playlists.
+- Obtener videos de una playlist.
+
+No guarda videos en disco.
 """
 
 import os
 import time
 import httpx
+import config
 
-CLIENT_ID = os.environ["YT_CLIENT_ID"]
-CLIENT_SECRET = os.environ["YT_CLIENT_SECRET"]
-REFRESH_TOKEN = os.environ["YT_REFRESH_TOKEN"]
-PLAYLIST_ID = os.environ["YT_PLAYLIST_ID"]
-
-TOKEN_URL = "https://oauth2.googleapis.com/token"
-UPLOAD_INIT_URL = (
-    "https://www.googleapis.com/upload/youtube/v3/videos"
-    "?uploadType=resumable&part=snippet,status"
-)
-PLAYLIST_INSERT_URL = (
-    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet"
-)
-PLAYLISTS_URL = "https://www.googleapis.com/youtube/v3/playlists"
-PLAYLIST_ITEMS_URL = (
-    "https://www.googleapis.com/youtube/v3/playlistItems"
-)
-# Cache simple del access_token en memoria (dura ~1 hora)
-_token_cache = {"access_token": None, "expires_at": 0}
-
-
+# ------------------------------
+#  AUTENTICACION
+# ------------------------------
 async def get_access_token() -> str:
+    """
+    Devuelve un access token válido.
+
+    Si el token almacenado todavía sirve,
+    lo reutiliza. Si expiró, obtiene uno nuevo
+    utilizando el refresh token.
+    """
+
     """Devuelve un access_token válido, refrescándolo si hace falta."""
-    if _token_cache["access_token"] and time.time() < _token_cache["expires_at"] - 60:
-        return _token_cache["access_token"]
+
+    if config._token_cache["access_token"] and time.time() < config._token_cache["expires_at"] - 60:
+        return config._token_cache["access_token"]
 
     async with httpx.AsyncClient() as client:
         resp = await client.post(
-            TOKEN_URL,
+            config.TOKEN_URL,
             data={
-                "client_id": CLIENT_ID,
-                "client_secret": CLIENT_SECRET,
-                "refresh_token": REFRESH_TOKEN,
+                "client_id": config.CLIENT_ID,
+                "client_secret": config.CLIENT_SECRET,
+                "refresh_token": config.REFRESH_TOKEN,
                 "grant_type": "refresh_token",
             },
         )
+
+        #print("STATUS TOKEN:", resp.status_code)
+        #print("RESPUESTA TOKEN:", resp.text)
+
         resp.raise_for_status()
         data = resp.json()
-
-    _token_cache["access_token"] = data["access_token"]
-    _token_cache["expires_at"] = time.time() + data["expires_in"]
-    return _token_cache["access_token"]
+    
 
 
+    config._token_cache["access_token"] = data["access_token"]
+    config._token_cache["expires_at"] = time.time() + data["expires_in"]
+    return config._token_cache["access_token"]
+
+
+# ------------------------------
+#  SUBIDA DE VIDEOS
+# ------------------------------
 async def initiate_upload(title: str, description: str, content_length: int, content_type: str) -> str:
     """
-    Abre una sesión de subida resumable en YouTube.
-    Devuelve la URL a la que hay que mandar los bytes del video.
+    Inicia una subida resumable en YouTube.
+
+    Devuelve la URL de la sesión de subida.
     """
     access_token = await get_access_token()
 
@@ -65,7 +76,7 @@ async def initiate_upload(title: str, description: str, content_length: int, con
 
     async with httpx.AsyncClient() as client:
         resp = await client.post(
-            UPLOAD_INIT_URL,
+            config.UPLOAD_INIT_URL,
             headers={
                 "Authorization": f"Bearer {access_token}",
                 "X-Upload-Content-Length": str(content_length),
@@ -79,6 +90,8 @@ async def initiate_upload(title: str, description: str, content_length: int, con
     upload_url = resp.headers["Location"]
     return upload_url
 
+
+
 async def upload_chunk(
     upload_url: str,
     chunk: bytes,
@@ -88,13 +101,22 @@ async def upload_chunk(
     client
 ):
 
+    """
+    Envía un bloque del video a YouTube.
+
+    Devuelve:
+    - status 308 si YouTube recibió el bloque
+      pero todavía falta más video.
+    - status 200 cuando terminó la subida.
+    """
+
     end = start + len(chunk) - 1
 
-    #print("========== UPLOAD CHUNK ==========")
-    #print("START:", start)
-    #print("END:", end)
-    #print("CHUNK SIZE:", len(chunk))
-    #print("TOTAL:", content_length)
+    print("========== UPLOAD CHUNK ==========")
+    print("START:", start)
+    print("END:", end)
+    print("CHUNK SIZE:", len(chunk))
+    print("TOTAL:", content_length)
 
 
     resp = await client.put(
@@ -108,11 +130,12 @@ async def upload_chunk(
     )
 
 
-   # print("STATUS:", resp.status_code)
-   # print("RANGE:", resp.headers.get("Range"))
+    print("STATUS:", resp.status_code)
+    print("RANGE:", resp.headers.get("Range"))
 
 
-
+    # YouTube recibió el bloque,
+    # pero todavía faltan bytes.
     if resp.status_code == 308:
        # print(
        # "YouTube aceptó hasta:",
@@ -133,17 +156,25 @@ async def upload_chunk(
         }
 
 
-   # print("ERROR YOUTUBE")
-   # print(resp.text)
+    print("ERROR YOUTUBE")
+    print(resp.text)
 
     return {
         "status":resp.status_code,
         "range":resp.headers.get("Range")
     }
 
+# -----------------------------
+#  PLAYLISTS    
+# -----------------------------
 async def add_to_playlist(video_id: str, playlist_id: str) -> None:
-    """Inserta el video ya subido dentro de la playlist configurada."""
+
+    """
+    Agrega un video a una playlist de YouTube.
+    """
+
     access_token = await get_access_token()
+
     body = {
         "snippet": {
             "playlistId": playlist_id,
@@ -157,7 +188,7 @@ async def add_to_playlist(video_id: str, playlist_id: str) -> None:
 
     async with httpx.AsyncClient() as client:
         resp = await client.post(
-            PLAYLIST_INSERT_URL,
+            config.PLAYLIST_INSERT_URL,
             headers={
                 "Authorization": f"Bearer {access_token}",
                 "Content-Type": "application/json",
@@ -168,6 +199,10 @@ async def add_to_playlist(video_id: str, playlist_id: str) -> None:
 
 
 async def get_playlists():
+
+    """
+    Obtiene las playlists del canal autenticado.
+    """
 
     access_token = await get_access_token()
 
@@ -182,12 +217,15 @@ async def get_playlists():
     async with httpx.AsyncClient() as client:
 
         resp = await client.get(
-            PLAYLISTS_URL,
+            config.PLAYLISTS_URL,
             headers={
                 "Authorization": f"Bearer {access_token}"
             },
             params=params
         )
+
+        #print("STATUS PLAYLISTS:", resp.status_code)
+        #print("RESPUESTA PLAYLISTS:", resp.text)
 
         resp.raise_for_status()
 
@@ -208,7 +246,14 @@ async def get_playlists():
 
     return playlists
 
+# -----------------------------
+# VIDEOS DE UNA PLAYLIST
+# -----------------------------
 async def get_playlist_videos(playlist_id: str):
+
+    """
+    Obtiene los videos pertenecientes a una playlist.
+    """
 
     access_token = await get_access_token()
 
@@ -221,7 +266,7 @@ async def get_playlist_videos(playlist_id: str):
     async with httpx.AsyncClient() as client:
 
         resp = await client.get(
-            PLAYLIST_ITEMS_URL,
+            config.PLAYLIST_ITEMS_URL,
             headers={
                 "Authorization": f"Bearer {access_token}"
             },

@@ -19,7 +19,7 @@ Partidos
 <section class="card">
 
 
-    <h3>Partidos de la fecha</h3>
+    <h3>Partidos </h3>
 
 
     {% for video in videos %}
@@ -29,13 +29,15 @@ Partidos
         <div>
 
             <strong>
-                {{ video.resultado }}
+                {{ video.titulo }}
             </strong>
 
         </div>
 
         <div class="acciones-partido">
             
+            <!--
+            Botón de descarga
             <button 
             class="watch-button download-button"
             onclick="descargarVideo('{{ video.archivo }}')">
@@ -43,6 +45,8 @@ Partidos
                 <i class="fa-solid fa-download"></i>
 
             </button>
+            --> 
+            
             <a 
             href="{{ video.url }}"
             target="_blank"
