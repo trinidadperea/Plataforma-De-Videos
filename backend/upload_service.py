@@ -3,7 +3,7 @@ from fastapi import HTTPException
 import httpx
 import config
 import youtube
-
+import gc
 
 
 # Obtengo los datos para ponerle el nombre en yotube
@@ -103,6 +103,8 @@ async def subir_chunks_a_youtube(
 
             del buffer[:config.PART_SIZE]
 
+            # para limpiar garbage
+            gc.collect()
 
             respuesta = await youtube.upload_chunk(
                 upload_url=upload_url,
