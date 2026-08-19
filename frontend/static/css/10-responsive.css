@@ -1,0 +1,107 @@
+/* ===========================
+   RESPONSIVE / MOBILE
+=========================== */
+
+@media (max-width:768px){
+
+    .fixture-card{
+        padding:0;
+        background:none;
+        box-shadow:none;
+        border:none;
+    }
+
+    .content{
+        margin-left:0;
+        padding:95px 18px 18px;
+    }
+
+    .sidebar{
+        position:fixed;
+        left:-270px;
+        top:0;
+        width:260px;
+        height:100vh;
+        transition:.3s;
+        z-index:2000;
+        box-shadow:0 0 30px rgba(0,0,0,.25);
+    }
+
+    .sidebar.open{
+        left:0;
+    }
+
+    #menu-overlay{
+        display:block;
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.35);
+        opacity:0;
+        visibility:hidden;
+        transition:.3s;
+        z-index:1500;
+    }
+
+    #menu-overlay.show{
+        opacity:1;
+        visibility:visible;
+    }
+
+    .topbar{
+        left:0;
+        justify-content:space-between;
+        padding:0 18px;
+    }
+
+    .mobile-title{
+        display:block;
+        color:white;
+        font-size:20px;
+    }
+
+    #menu-toggle{
+        display:block;
+        background:none;
+        border:none;
+        color:white;
+        font-size:24px;
+        cursor:pointer;
+    }
+
+    .topbar-user{
+        gap:0;
+    }
+
+    .topbar-user a{
+        padding:8px 12px;
+        font-size:14px;
+    }
+
+    .page-title h2{
+        font-size:28px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .partido-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .acciones-partido{
+        width:100%;
+        justify-content:flex-end;
+    }
+}
+
+@media (max-width:600px){
+
+    #video-file{
+        font-size:14px;
+        transform:scale(1.05);
+        transform-origin:left center;
+    }
+}

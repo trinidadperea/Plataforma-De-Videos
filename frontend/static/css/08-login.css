@@ -1,0 +1,48 @@
+/* ===========================
+   LOGIN
+=========================== */
+
+.login-card{
+    max-width:450px;
+    margin:60px auto;
+}
+
+.login-card h3{
+    text-align:center;
+    font-size:26px;
+    margin-bottom:30px;
+}
+
+.login-card input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+    margin-bottom:20px;
+    font-size:16px;
+}
+
+#login-button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:#7B2E3A;
+    color:white;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+#login-button:hover{
+    background:#642532;
+    transform:translateY(-2px);
+}
+
+#login-error{
+    margin-top:20px;
+    text-align:center;
+    color:#dc2626;
+    font-weight:600;
+}

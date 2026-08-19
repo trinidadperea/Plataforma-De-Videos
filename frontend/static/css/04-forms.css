@@ -1,0 +1,52 @@
+/* ===========================
+   FORMULARIOS / RESULTADO
+=========================== */
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#374151;
+}
+
+select,
+input[type="text"],
+input[type="number"]{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+    margin-bottom:22px;
+    font-size:16px;
+    background:white;
+    transition:.2s;
+}
+
+select:focus,
+input:focus{
+    outline:none;
+    border-color:#8FB8DE;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+.resultado{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:nowrap;
+}
+
+.resultado input{
+    width:60px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    padding:10px;
+}
+
+.resultado span{
+    font-size:24px;
+    font-weight:bold;
+    color:#6b7280;
+}

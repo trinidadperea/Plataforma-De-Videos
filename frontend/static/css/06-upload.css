@@ -1,0 +1,110 @@
+/* ===========================
+   SUBIDA DE VIDEOS
+=========================== */
+
+.upload-box{
+    border:2px dashed #cbd5e1;
+    border-radius:18px;
+    padding:40px;
+    text-align:center;
+    margin-bottom:25px;
+    transition:.25s;
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+}
+
+.upload-box:hover{
+    border-color:#2563eb;
+    background:#f8fbff;
+}
+
+.upload-icon{
+    font-size:52px;
+    margin-bottom:15px;
+}
+
+.upload-box p{
+    color:#6b7280;
+    margin-bottom:20px;
+}
+
+input[type="file"]{
+    width:auto;
+}
+
+#video-file{
+    width:100%;
+    max-width:100%;
+    font-size:15px;
+    box-sizing:border-box;
+}
+
+.file-upload{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.file-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:140px;
+    height:45px;
+    border:2px dashed #999;
+    border-radius:8px;
+    background:#fafafa;
+    color:#333;
+    cursor:pointer;
+    font-size:15px;
+    font-family:inherit;
+    transition:all 0.2s ease;
+}
+
+.file-button:hover{
+    border-color:#1d4ed8;
+    background:#eef4ff;
+    color:#1d4ed8;
+}
+
+#file-name{
+    font-size:14px;
+    color:#555;
+    word-break:break-word;
+}
+
+#progress-container{
+    width:100%;
+    height:20px;
+    background:#e5e7eb;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:20px;
+}
+
+#progress-bar{
+    height:100%;
+    width:0%;
+    background:#4E6E58;
+    transition:width .2s;
+}
+
+#upload-status{
+    margin-top:18px;
+    text-align:center;
+    font-size:16px;
+    font-weight:600;
+    color:#7B2E3A;
+}
+
+#upload-warning{
+    margin-top:15px;
+    text-align:center;
+    color:#7B2E3A;
+    font-weight:600;
+    font-size:15px;
+}

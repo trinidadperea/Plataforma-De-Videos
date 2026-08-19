@@ -9,8 +9,10 @@ Partidos
 
 <div class="top-actions">
 
-    <a href="/partidos" class="back-button">
-        Volver
+    <a href="/partidos" class="back-button" title="Volver">
+        
+        <!-- Volver -->
+        <i class="fa-solid fa-arrow-left"></i>
     </a>
 
 </div>
@@ -46,12 +48,35 @@ Partidos
 
             </button>
             --> 
-            
+            {% if usuario %}
+
+            <a
+                href="/partidos/{{ video.videoId }}/editar"
+                class="watch-button edit-button"
+                title="Editar partido" 
+            >
+                <!-- Editar -->
+                <i class="fa-solid fa-pen"></i>
+            </a>
+
+            <button
+                class="watch-button delete-button"
+                onclick="eliminarPartido('{{ video.videoId }}', '{{ video.playlistItemId }}')"
+                title="Eliminar partido"
+            >
+                <!-- Eliminar -->
+                <i class="fa-solid fa-trash"></i>
+            </button>
+            {% endif %}
+
             <a 
             href="{{ video.url }}"
             target="_blank"
-            class="watch-button">
-            Ver partido
+            class="watch-button"
+            title="Ver en YouTube"
+            >
+            
+            <i class="fa-solid fa-eye"></i>
         </a>
         
         </div>
@@ -63,4 +88,8 @@ Partidos
 
 </section>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/eliminar.js"></script>
 {% endblock %}

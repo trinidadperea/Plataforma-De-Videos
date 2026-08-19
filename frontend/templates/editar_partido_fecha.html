@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar partido
+{% endblock %}
+
+{% block content %}
+
+<div class="top-actions">
+    <a href="/partidos" class="back-button">Volver</a>
+</div>
+
+<section class="card">
+    <h3>Fecha</h3>
+    <select id="fecha-select"></select>
+</section>
+
+<section class="card">
+    <h3>Partido</h3>
+    <label>Club local</label>
+    <select id="club-local"></select>
+
+    <label>Club visitante</label>
+    <select id="club-visitante"></select>
+</section>
+
+<section class="card">
+    <h3>Resultado</h3>
+    <div class="resultado">
+        <label id="nombre-local">Local</label>
+        <input type="number" id="goles-local" min="0" placeholder="0">
+        <span>-</span>
+        <label id="nombre-visitante">Visitante</label>
+        <input type="number" id="goles-visitante" min="0" placeholder="0">
+    </div>
+
+    <div id="bonus-section" class="hidden">
+        <label>Bonus</label>
+        <select id="bonus-club">
+            <option value="">Seleccionar club</option>
+        </select>
+    </div>
+</section>
+
+<button id="guardar-button">Guardar cambios</button>
+<p id="editar-status"></p>
+
+<script>
+    // Datos actuales del partido, inyectados por el backend
+    window.datosEdicion = {
+        videoId: "{{ video_id }}",
+        clubLocal: "{{ club_local_actual }}",
+        clubVisitante: "{{ club_visitante_actual }}",
+        fecha: "{{ fecha_actual }}",
+        golLocal: "{{ gol_local_actual }}",
+        golVisitante: "{{ gol_visitante_actual }}",
+        bonus: "{{ bonus_actual }}"
+    };
+</script>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/editar.js"></script>
+{% endblock %}

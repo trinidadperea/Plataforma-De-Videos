@@ -92,7 +92,20 @@
 
 </div>
 
-<script src="/static/js/app.js"></script>
+<div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-card">
+        <h3>¿Eliminar video?</h3>
+        <p>Esta acción no se puede deshacer. El video se va a eliminar de YouTube y de la playlist.</p>
+        <div class="modal-actions">
+            <button id="modal-cancelar" class="modal-button modal-cancelar">Cancelar</button>
+            <button id="modal-confirmar" class="modal-button modal-confirmar">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/app.js"> </script>
+
+{% block scripts %}{% endblock %}
 
 </body>
 

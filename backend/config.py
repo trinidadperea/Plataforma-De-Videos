@@ -67,6 +67,8 @@ PLAYLISTS_URL = "https://www.googleapis.com/youtube/v3/playlists"
 PLAYLIST_ITEMS_URL = (
     "https://www.googleapis.com/youtube/v3/playlistItems"
 )
+VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
+
 
 # Cache simple del access_token en memoria (dura ~1 hora)
 _token_cache = {

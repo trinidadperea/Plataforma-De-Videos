@@ -41,6 +41,7 @@ const fechas = [
     "Fecha 15"
 ];
 
+// funcion que carga las fechas cuando estoy subiendo un video
 function cargarFechas(){
 
     const select = document.getElementById("fecha-select");
@@ -72,7 +73,7 @@ function cargarFechas(){
 
 cargarFechas();
 
-
+// funcion que carga los clubes cuando estoy subiendo un video
 function cargarClubes(){
 
     const local = document.getElementById("club-local");
@@ -121,6 +122,8 @@ if (clubLocal) {
 }
 //cargarClubes();
 
+// funcion que cargaba las playlist, ahora tengo solo una entonces no tengo opciones para elegir, 
+// pero dejo la funcion por si en algun momento quiero agregar mas playlists
 async function cargarPlaylists(){
 
     const select = document.getElementById(
@@ -178,7 +181,6 @@ async function cargarPlaylists(){
 
 }
 
-
 cargarPlaylists();
 
 const playlistSelect =
@@ -212,9 +214,6 @@ if (playlistSelect){
         }
     );
 }
-    
-
-
 
 // Evento botón subir
 
@@ -474,7 +473,7 @@ if (uploadButton) {
 
             if (bonus != ""){ // es decir hay algun club en bonus
                 if (bonus == clubLocal){
-                    description =`Torneo Clausura 2026, Resultado: ${clubLocal} ${resultadoLocal}* - ${clubVisitante} ${resultadoVisitante}.`;
+                    description =`Torneo Clausura 2026, Resultado: ${clubLocal} ${resultadoLocal}* - ${resultadoVisitante} ${clubVisitante}.`;
                 }
                 else {
                     description = `Torneo Clausura 2026, Resultado: ${clubLocal} ${resultadoLocal} - ${resultadoVisitante}* ${clubVisitante} .`;

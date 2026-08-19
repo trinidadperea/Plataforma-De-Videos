@@ -1,0 +1,33 @@
+/* ===========================
+   PARTIDOS
+=========================== */
+
+.partido-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    margin-top:15px;
+    background:#f5f5f5;
+    border-radius:12px;
+}
+
+.acciones-partido{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.fixture-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+}
+
+.fixture-image{
+    max-width:100%;
+    height:auto;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+}

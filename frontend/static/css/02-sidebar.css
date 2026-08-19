@@ -1,0 +1,62 @@
+/* ===========================
+   SIDEBAR / MENU
+=========================== */
+
+.sidebar{
+    width:260px;
+    background:#7B2E3A;
+    color:white;
+    padding:35px 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+.logo{
+    margin-bottom:50px;
+}
+
+.logo h1{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.logo p{
+    opacity:.8;
+    font-size:15px;
+}
+
+nav{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.menu-item{
+    text-decoration:none !important;
+    background:none;
+    border:none;
+    color:white;
+    text-align:left;
+    font-size:17px;
+    padding:14px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.25s;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.menu-item:hover{
+    background:rgba(255,255,255,.12);
+}
+
+.menu-item.active{
+    background:#ffffff;
+    color:#4E6E58;
+    font-weight:bold;
+}

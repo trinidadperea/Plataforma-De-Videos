@@ -1,0 +1,73 @@
+/* ===========================
+   MODAL DE CONFIRMACIÓN
+=========================== */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:3000;
+}
+
+.modal-overlay.hidden{
+    display:none;
+}
+
+.modal-card{
+    background:#FCFCFA;
+    border:1px solid #ECE8E1;
+    box-shadow:0 8px 24px rgba(0,0,0,.15);
+    padding:30px;
+    max-width:400px;
+    width:90%;
+    text-align:center;
+}
+
+.modal-card h3{
+    font-size:20px;
+    margin-bottom:12px;
+    color:#1f2937;
+}
+
+.modal-card p{
+    color:#6b7280;
+    font-size:15px;
+    margin-bottom:25px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:12px;
+}
+
+.modal-button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.modal-cancelar{
+    background:#e5e7eb;
+    color:#374151;
+}
+
+.modal-cancelar:hover{
+    background:#d1d5db;
+}
+
+.modal-confirmar{
+    background:#7B2E3A;
+    color:white;
+}
+
+.modal-confirmar:hover{
+    background:#642532;
+}

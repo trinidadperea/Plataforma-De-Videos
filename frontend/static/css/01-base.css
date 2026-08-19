@@ -1,0 +1,57 @@
+/* ===========================
+   BASE / RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Inter, Arial, Helvetica, sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+.content{
+    margin-left:260px;
+    width:100%;
+    padding:110px 45px 45px;
+}
+
+.page-title{
+    margin-bottom:35px;
+}
+
+.page-title h2{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.page-title p{
+    color:#6b7280;
+    font-size:17px;
+}
+
+.card{
+    background:#FCFCFA;
+    border:1px solid #ECE8E1;
+    box-shadow:0 8px 24px rgba(0,0,0,.05);
+    padding:28px;
+    margin-bottom:25px;
+}
+
+.card h3{
+    margin-bottom:22px;
+    font-size:20px;
+}
+
+.hidden{
+    display:none;
+}
